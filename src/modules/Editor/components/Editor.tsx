@@ -1,78 +1,29 @@
-import { useState, useCallback } from 'react';
-import {
-  ReactFlow,
-  applyNodeChanges,
-  applyEdgeChanges,
-  addEdge,
-  type OnNodesChange,
-  type OnEdgesChange,
-  type OnConnect,
-  type Node,
-  type Edge,
-  type NodeTypes,
-} from '@xyflow/react';
-import { RectangleShape } from './RectangleShape';
-import { TriangleShape } from './TriangleShape';
-import { CircleShape } from './CircleShape';
-import { DELETE_KEY_CODES, SHAPES } from '../consts/editor.consts';
-
-const initialNodes: Node[] = [
-  { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
-  { id: 'n2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
-  {
-    id: 'n3',
-    position: { x: 0, y: 200 },
-    data: { label: 'Node 3' },
-    type: SHAPES.RECTANGLE,
-  },
-  {
-    id: 'n4',
-    position: { x: 0, y: 300 },
-    data: { label: 'Node 4' },
-    type: SHAPES.TRIANGLE,
-  },
-  {
-    id: 'n5',
-    position: { x: 0, y: 400 },
-    data: { label: 'Node 5' },
-    type: SHAPES.CIRCLE,
-  },
-];
-const initialEdges: Edge[] = [{ id: 'n1-n2', source: 'n1', target: 'n2' }];
+import { ReactFlow, type NodeTypes } from '@xyflow/react';
+import { RectangleShapeNode } from './RectangleShapeNode';
+import { TriangleShapeNode } from './TriangleShapeNode';
+import { CircleShapeNode } from './CircleShapeNode';
+import { DELETE_KEY_CODES } from '../consts/editor.consts';
+import { SHAPES } from '../../../common/common.consts';
+import { useDiagramStore } from '../../../common/store/diagram.store';
 
 const NODE_TYPES: NodeTypes = {
-  [SHAPES.RECTANGLE]: RectangleShape,
-  [SHAPES.TRIANGLE]: TriangleShape,
-  [SHAPES.CIRCLE]: CircleShape,
+  [SHAPES.RECTANGLE]: RectangleShapeNode,
+  [SHAPES.TRIANGLE]: TriangleShapeNode,
+  [SHAPES.CIRCLE]: CircleShapeNode,
 };
 
 export function Editor() {
-  const [nodes, setNodes] = useState<Node[]>(initialNodes);
-  const [edges, setEdges] = useState<Edge[]>(initialEdges);
-
-  const onNodesChange: OnNodesChange = useCallback(
-    (changes) =>
-      setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
-    []
-  );
-  const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) =>
-      setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
-    []
-  );
-  const onConnect: OnConnect = useCallback(
-    (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-    []
-  );
+  const { edges, nodes, updateEdges, updateNodes, updateConnections } =
+    useDiagramStore();
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div className='w-screen h-screen'>
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
+        onNodesChange={updateNodes}
+        onEdgesChange={updateEdges}
+        onConnect={updateConnections}
         nodeTypes={NODE_TYPES}
         deleteKeyCode={DELETE_KEY_CODES}
         fitView

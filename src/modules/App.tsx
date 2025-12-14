@@ -1,8 +1,10 @@
 import { Editor } from './Editor';
+import { Sidebar } from './Sidebar/components/Sidebar';
 
 export default function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div>
+      <Sidebar />
       <Editor />
     </div>
   );
