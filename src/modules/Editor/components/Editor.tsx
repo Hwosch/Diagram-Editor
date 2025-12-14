@@ -6,12 +6,14 @@ import { DELETE_KEY_CODES } from '../consts/editor.consts';
 import { SHAPES } from '../../../common/common.consts';
 import { useDiagramStore } from '../../../common/store/diagram.store';
 
+/** Мапа фигур к компонентам. */
 const NODE_TYPES: NodeTypes = {
   [SHAPES.RECTANGLE]: RectangleShapeNode,
   [SHAPES.TRIANGLE]: TriangleShapeNode,
   [SHAPES.CIRCLE]: CircleShapeNode,
 };
 
+/** Редактор. */
 export function Editor() {
   const { edges, nodes, updateEdges, updateNodes, updateConnections } =
     useDiagramStore();

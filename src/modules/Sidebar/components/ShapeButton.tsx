@@ -4,11 +4,15 @@ import type { TShape } from '../../../common/types/diagram.types';
 import type { JSX } from 'react';
 import { LIMIT_BY_SHAPE } from '../../../common/common.consts';
 
+/**
+ * @prop shape Тип фигуры.
+ */
 interface IProps {
   shape: TShape;
   children: JSX.Element;
 }
 
+/** Кнопка добавления фигуры. */
 export const ShapeButton: React.FC<IProps> = ({ shape, children }) => {
   const { shapeCount, addNode } = useDiagramStore();
 

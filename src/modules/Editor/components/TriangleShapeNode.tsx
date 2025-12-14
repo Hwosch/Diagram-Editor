@@ -1,6 +1,7 @@
 import type React from 'react';
 import { BaseShapeNode } from './BaseShapeNode';
 
+/** Нода треугольника. */
 export const TriangleShapeNode: React.FC = () => (
   <BaseShapeNode>
     <svg className='size-28' viewBox='0 0 100 100'>

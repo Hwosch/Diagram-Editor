@@ -1,8 +1,10 @@
 import { create } from 'zustand';
-import type { IDiagramState, IShapeNode, TShape } from '../types/diagram.types';
+import type { IDiagramState, IShapeNode } from '../types/diagram.types';
 import { LIMIT_BY_SHAPE } from '../common.consts';
 import { addEdge, applyEdgeChanges, applyNodeChanges } from '@xyflow/react';
+import { getShapeCount } from '../utils/diagram.utils';
 
+/** Стор диаграмм. */
 export const useDiagramStore = create<IDiagramState>((set, get) => ({
   nodes: [],
   edges: [],
@@ -48,13 +50,7 @@ export const useDiagramStore = create<IDiagramState>((set, get) => ({
 
   updateShapeCount: () => {
     const { nodes } = get();
-    const shapeCount: Record<TShape, number> = nodes.reduce(
-      (acc, node) => {
-        acc[node.type] += 1;
-        return acc;
-      },
-      { circle: 0, rectangle: 0, triangle: 0 }
-    );
+    const shapeCount = getShapeCount(nodes);
 
     set(() => ({
       shapeCount,
@@ -70,6 +66,19 @@ export const useDiagramStore = create<IDiagramState>((set, get) => ({
   updateConnections: (connection) => {
     set((state) => ({
       edges: addEdge(connection, state.edges),
+    }));
+  },
+
+  setDiagramData: ({ nodes, edges }) => {
+    const shapeCount = getShapeCount(nodes);
+    set({ nodes, edges, shapeCount });
+  },
+
+  clearDiagram: () => {
+    set(() => ({
+      nodes: [],
+      edges: [],
+      shapeCount: { circle: 0, rectangle: 0, triangle: 0 },
     }));
   },
 }));

@@ -1,6 +1,7 @@
 import type React from 'react';
 import { ShapeButton } from './ShapeButton';
 
+/** Сайдбар. */
 export const Sidebar: React.FC = () => (
   <div className='fixed h-full p-10 z-1'>
     <div className='h-full w-30 border border-gray-300 rounded-4xl shadow bg-white flex-col'>

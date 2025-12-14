@@ -6,6 +6,7 @@ interface IProps {
   children: JSX.Element;
 }
 
+/** Базовая нода фигуры. */
 export const BaseShapeNode: React.FC<IProps> = ({ children }) => (
   <>
     <Handle type='source' position={Position.Top} />
