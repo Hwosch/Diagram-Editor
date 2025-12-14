@@ -1,10 +1,8 @@
 import type React from 'react';
 import { BaseShapeNode } from './BaseShapeNode';
 
-export const CircleShape: React.FC = () => {
-  return (
-    <BaseShapeNode>
-      <div className="size-24 border-2 border-lime-500 rounded-full" />
-    </BaseShapeNode>
-  );
-};
+export const CircleShape: React.FC = () => (
+  <BaseShapeNode>
+    <div className='size-24 border-2 border-lime-500 rounded-full' />
+  </BaseShapeNode>
+);

@@ -19,9 +19,24 @@ import { DELETE_KEY_CODES, SHAPES } from '../consts/editor.consts';
 const initialNodes: Node[] = [
   { id: 'n1', position: { x: 0, y: 0 }, data: { label: 'Node 1' } },
   { id: 'n2', position: { x: 0, y: 100 }, data: { label: 'Node 2' } },
-  { id: 'n3', position: { x: 0, y: 200 }, data: { label: 'Node 3' }, type: SHAPES.RECTANGLE },
-  { id: 'n4', position: { x: 0, y: 300 }, data: { label: 'Node 4' }, type: SHAPES.TRIANGLE },
-  { id: 'n5', position: { x: 0, y: 400 }, data: { label: 'Node 5' }, type: SHAPES.CIRCLE },
+  {
+    id: 'n3',
+    position: { x: 0, y: 200 },
+    data: { label: 'Node 3' },
+    type: SHAPES.RECTANGLE,
+  },
+  {
+    id: 'n4',
+    position: { x: 0, y: 300 },
+    data: { label: 'Node 4' },
+    type: SHAPES.TRIANGLE,
+  },
+  {
+    id: 'n5',
+    position: { x: 0, y: 400 },
+    data: { label: 'Node 5' },
+    type: SHAPES.CIRCLE,
+  },
 ];
 const initialEdges: Edge[] = [{ id: 'n1-n2', source: 'n1', target: 'n2' }];
 
@@ -36,11 +51,13 @@ export function Editor() {
   const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
   const onNodesChange: OnNodesChange = useCallback(
-    (changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
+    (changes) =>
+      setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     []
   );
   const onEdgesChange: OnEdgesChange = useCallback(
-    (changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
+    (changes) =>
+      setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
     []
   );
   const onConnect: OnConnect = useCallback(

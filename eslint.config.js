@@ -26,8 +26,18 @@ export default defineConfig([
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
   eslintPluginPrettierRecommended,
+  {
+    files: ['**/*.{ts,tsx}'],
+    rules: {
+      'arrow-body-style': ['error', 'as-needed'],
+      'no-useless-return': 'error',
+    },
+  },
 ]);
