@@ -1,15 +1,16 @@
 import type React from 'react';
+import { ShapeButton } from './ShapeButton';
 
 export const Sidebar: React.FC = () => (
   <div className='fixed h-full p-10 z-1'>
     <div className='h-full w-30 border border-gray-300 rounded-4xl shadow bg-white flex-col'>
-      <button className='w-full p-2'>
+      <ShapeButton shape='circle'>
         <div className='size-18 bg-lime-400 rounded-full' />
-      </button>
-      <button className='w-full p-2'>
+      </ShapeButton>
+      <ShapeButton shape='rectangle'>
         <div className='w-20 h-16 bg-blue-400 rounded-xl' />
-      </button>
-      <button className='w-full p-2'>
+      </ShapeButton>
+      <ShapeButton shape='triangle'>
         <svg
           viewBox='0 0 16 16'
           xmlns='http://www.w3.org/2000/svg'
@@ -29,7 +30,7 @@ export const Sidebar: React.FC = () => (
             ></path>
           </g>
         </svg>
-      </button>
+      </ShapeButton>
     </div>
   </div>
 );

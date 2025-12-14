@@ -19,7 +19,7 @@ export interface IDiagramState {
   shapeCount: Record<TShape, number>;
 
   addNode: (type: TShape) => void;
-  removeNode: (id: string) => void;
+  updateShapeCount: () => void;
   updateNodes: OnNodesChange<IShapeNode>;
   updateEdges: OnEdgesChange;
   updateConnections: OnConnect;

@@ -1,5 +1,5 @@
 import { Editor } from './Editor';
-import { Sidebar } from './Sidebar/components/Sidebar';
+import { Sidebar } from './Sidebar';
 
 export default function App() {
   return (

@@ -1,31 +1,10 @@
 import { create } from 'zustand';
-import type { IDiagramState, IShapeNode } from '../types/diagram.types';
-import { LIMIT_BY_SHAPE, SHAPES } from '../common.consts';
+import type { IDiagramState, IShapeNode, TShape } from '../types/diagram.types';
+import { LIMIT_BY_SHAPE } from '../common.consts';
 import { addEdge, applyEdgeChanges, applyNodeChanges } from '@xyflow/react';
 
-const initialNodes: IShapeNode[] = [
-  {
-    id: 'n3',
-    position: { x: 0, y: 200 },
-    data: { label: 'Node 3' },
-    type: SHAPES.RECTANGLE,
-  },
-  {
-    id: 'n4',
-    position: { x: 0, y: 300 },
-    data: { label: 'Node 4' },
-    type: SHAPES.TRIANGLE,
-  },
-  {
-    id: 'n5',
-    position: { x: 0, y: 400 },
-    data: { label: 'Node 5' },
-    type: SHAPES.CIRCLE,
-  },
-];
-
 export const useDiagramStore = create<IDiagramState>((set, get) => ({
-  nodes: initialNodes,
+  nodes: [],
   edges: [],
   shapeCount: { circle: 0, rectangle: 0, triangle: 0 },
 
@@ -52,27 +31,33 @@ export const useDiagramStore = create<IDiagramState>((set, get) => ({
     }));
   },
 
-  removeNode: (id) => {
-    const { nodes } = get();
-    const nodeToRemove = nodes.find((n) => n.id === id);
-
-    if (!nodeToRemove) return;
-
-    set((state) => ({
-      nodes: state.nodes.filter((n) => n.id !== id),
-      shapeCount: {
-        ...state.shapeCount,
-        [nodeToRemove.type]: Math.max(
-          0,
-          state.shapeCount[nodeToRemove.type] - 1
-        ),
-      },
-    }));
-  },
-
   updateNodes: (changes) => {
     set((state) => ({
       nodes: applyNodeChanges(changes, state.nodes),
+    }));
+
+    const { updateShapeCount } = get();
+
+    const needUpdateShapeCount = changes.some(
+      (change) => change.type === 'remove'
+    );
+    if (needUpdateShapeCount) {
+      updateShapeCount();
+    }
+  },
+
+  updateShapeCount: () => {
+    const { nodes } = get();
+    const shapeCount: Record<TShape, number> = nodes.reduce(
+      (acc, node) => {
+        acc[node.type] += 1;
+        return acc;
+      },
+      { circle: 0, rectangle: 0, triangle: 0 }
+    );
+
+    set(() => ({
+      shapeCount,
     }));
   },
 
