@@ -1,4 +1,10 @@
-import { ReactFlow, type NodeTypes } from '@xyflow/react';
+import {
+  Background,
+  BackgroundVariant,
+  Controls,
+  ReactFlow,
+  type NodeTypes,
+} from '@xyflow/react';
 import { RectangleShapeNode } from './RectangleShapeNode';
 import { TriangleShapeNode } from './TriangleShapeNode';
 import { CircleShapeNode } from './CircleShapeNode';
@@ -29,7 +35,10 @@ export function Editor() {
         nodeTypes={NODE_TYPES}
         deleteKeyCode={DELETE_KEY_CODES}
         fitView
-      />
+      >
+        <Background variant={BackgroundVariant.Lines} />
+        <Controls position='bottom-right' />
+      </ReactFlow>
     </div>
   );
 }
