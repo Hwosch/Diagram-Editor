@@ -8,40 +8,64 @@ import {
 import { useExport } from '../hooks/useExport';
 import { useImport } from '../hooks/useImport';
 import { useDiagramStore } from '@/common/store/diagram.store';
+import { ToolbarButton } from './ToolbarButton';
 
 /** Тулбар. */
 export const Toolbar: React.FC = () => {
-  const { clearDiagram } = useDiagramStore();
+  const { nodes, clearDiagram } = useDiagramStore();
   const handleExport = useExport();
   const handleImport = useImport();
 
+  const hasNodes = !!nodes.length;
+
+  const handleClear = () => {
+    clearDiagram();
+  };
+
   return (
-    <div className='fixed border border-gray-300 rounded-4xl shadow z-1 top-10 right-10 p-4'>
-      <div className='flex gap-2'>
-        <button onClick={handleExport}>
+    <div
+      className='
+        fixed top-6 right-8 z-1
+        rounded-3xl border border-slate-200 bg-white/80
+        px-4 py-2
+      '
+    >
+      <div className='flex items-center gap-2'>
+        <ToolbarButton
+          title='Скачать диаграмму'
+          onClick={handleExport}
+          disabled={!hasNodes}
+        >
           <Lineicons
             icon={Download1Outlined}
-            size={36}
-            className='text-gray-900'
-            strokeWidth={1.5}
+            size={24}
+            className='text-slate-900'
+            strokeWidth={1.6}
           />
-        </button>
-        <button onClick={handleImport}>
+        </ToolbarButton>
+
+        <ToolbarButton title='Импортировать диаграмму' onClick={handleImport}>
           <Lineicons
             icon={Upload1Outlined}
-            size={36}
-            className='text-gray-900'
-            strokeWidth={1.5}
+            size={24}
+            className='text-slate-900'
+            strokeWidth={1.6}
           />
-        </button>
-        <button onClick={clearDiagram}>
+        </ToolbarButton>
+
+        <ToolbarButton
+          title='Очистить диаграмму'
+          onClick={handleClear}
+          disabled={!hasNodes}
+          variant='danger'
+        >
           <Lineicons
             icon={Trash3Outlined}
-            size={36}
-            className='text-red-800'
-            strokeWidth={1.5}
+            size={24}
+            className='text-rose-600'
+            strokeWidth={1.6}
           />
-        </button>
+        </ToolbarButton>
       </div>
     </div>
   );

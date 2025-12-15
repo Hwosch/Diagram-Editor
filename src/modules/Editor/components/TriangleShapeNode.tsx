@@ -11,7 +11,7 @@ export const TriangleShapeNode: React.FC = () => (
         stroke='currentColor'
         strokeWidth='1.5'
         strokeLinejoin='round'
-        className='text-orange-400'
+        className='text-amber-500'
       />
     </svg>
   </BaseShapeNode>

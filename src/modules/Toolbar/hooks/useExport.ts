@@ -1,4 +1,4 @@
-import { useDiagramStore } from '../../../common/store/diagram.store';
+import { useDiagramStore } from '@/common/store/diagram.store';
 import { serializeDiagram } from '../utils/toolbar.utils';
 
 /** Хук экспорта. */

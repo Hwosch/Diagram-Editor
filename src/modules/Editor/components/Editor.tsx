@@ -3,8 +3,8 @@ import { RectangleShapeNode } from './RectangleShapeNode';
 import { TriangleShapeNode } from './TriangleShapeNode';
 import { CircleShapeNode } from './CircleShapeNode';
 import { DELETE_KEY_CODES } from '../consts/editor.consts';
-import { SHAPES } from '../../../common/common.consts';
-import { useDiagramStore } from '../../../common/store/diagram.store';
+import { SHAPES } from '@/common/common.consts';
+import { useDiagramStore } from '@/common/store/diagram.store';
 
 /** Мапа фигур к компонентам. */
 const NODE_TYPES: NodeTypes = {

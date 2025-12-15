@@ -120,10 +120,7 @@ export const useImport = () => {
 
       if (!result.success) {
         alert(result.error || 'Ошибка при импорте');
-        return;
       }
-
-      alert('Диаграмма успешно импортирована');
     };
 
     input.click();
