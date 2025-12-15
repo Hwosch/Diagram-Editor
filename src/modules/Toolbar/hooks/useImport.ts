@@ -1,7 +1,11 @@
 import { useDiagramStore } from '@/common/store/diagram.store';
 import { LIMIT_BY_SHAPE, SHAPES } from '@/common/common.consts';
 import { getShapeCount } from '@/common/utils/diagram.utils';
-import type { IDiagramData, TShape } from '@/common/types/diagram.types';
+import type {
+  IDiagramData,
+  IShapeNode,
+  TShape,
+} from '@/common/types/diagram.types';
 
 /**
  * Результат импорта
@@ -53,6 +57,13 @@ export const useImport = () => {
     return validEdges;
   };
 
+  const validateShapeCount = (nodes: IShapeNode[]): boolean => {
+    const shapeCount = getShapeCount(nodes);
+    return (Object.keys(shapeCount) as TShape[]).every(
+      (shape: TShape) => shapeCount[shape] <= LIMIT_BY_SHAPE
+    );
+  };
+
   const loadFromFile = (file: File): Promise<IImportResult> =>
     new Promise((resolve) => {
       const reader = new FileReader();
@@ -72,15 +83,13 @@ export const useImport = () => {
           }
 
           // Валидация количества фигур
-          const shapeCount = getShapeCount(jsonData.nodes);
-          (Object.keys(shapeCount) as TShape[]).forEach((shape: TShape) => {
-            if (shapeCount[shape] > LIMIT_BY_SHAPE) {
-              resolve({
-                success: false,
-                error: `Слишком много ${shape} в файле. Текущий лимит - ${LIMIT_BY_SHAPE}.`,
-              });
-            }
-          });
+          if (!validateShapeCount(jsonData.nodes)) {
+            resolve({
+              success: false,
+              error: `Слишком много одного типа фигуры в файле. Текущий лимит - ${LIMIT_BY_SHAPE}.`,
+            });
+            return;
+          }
 
           clearDiagram();
           setDiagramData({ nodes: jsonData.nodes, edges: jsonData.edges });
